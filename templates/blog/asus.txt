@@ -1,0 +1,30 @@
+Un processeur (aussi appelé microprocesseur ou CPU pour Central Processing Unit)
+est le coeur de l'ordinateur chargé de traiter et d'exécuter les instructions.
+On peut simplifier en disant qu'il est chargé d'exécuter les programmes de l'ordinateur.
+
+-Donc le fait d'avoir un processeur puissant, dans un jeu,
+te permettra en gros d'avoir un jeu plus fluide, plus réactif.
+C'est un peu comme si un bon processeur serait le cerveau d'un super mathématicien qui essaye de résoudre un
+super calcul,et un mauvais celui d'un élève de primaire: il résoudra le calcul, mais en beaucoup plus de temps.
+
+-Plus tu as un proco puissant, plus les calculs seront fait rapidement et
+comme ça les taches que tu lui as demandé seront effectuées plus rapidement.
+
+-chipset : il sert a gerer le transfert d'infos entre les composants du pc, proco, carte graph, etc ...
+Son rôle est de gérer des flux de données numériques entre le microprocesseur
+et les divers composants et sous-ensembles de composants de la carte mère
+
+La mémoire d’ordinateur, ou mémoire vive,
+ou encore RAM, est le support de stockage à court terme de vos données.
+Elle stocke les informations que votre ordinateur est en train d’utiliser
+afin qu’elles puissent être consultées rapidement.
+Plus votre ordinateur exécute de programmes simultanément,plus vous aurez besoin de mémoire.
+
+C'est quoi pour vous la Ventes : 
+
+Moi j'ai un bon relationnel, j'ai bcp d'empathie j'essai toujours de me mettre à la place du client
+de oomprendre son besoin, de comprendre ce qu'il lui faut, en plus de ça jsuis passionée par l'informatique
+donc j'essai de conseiller les meilleure produits aux client
+asus je connais depuis un moment c'est des super produits, justement récemment j'ai acheter une tablette asus
+pour ma mère.
+Je suis en auto-entrepreneur et je facture 150 par jour pour de la vente.

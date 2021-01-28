@@ -1,0 +1,67 @@
+{% block chat_design %}
+<link rel="stylesheet" href="{{ asset('build/css/conversation.css') }}"> 
+{% endblock %}
+<!-- Encadré discussion avec...  -->
+<div class="card">
+    <div class="card-header msg_head">
+        <div class="d-flex bd-highlight">
+            <div class="user_info">
+                <span>Discussion avec <strong>{{ user.username }}</strong></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Zone d'échange de message, et affichage droite ou gauche  -->
+<div class="mesgs">    
+    <div class="msg_history">
+        <div class="chat">
+            {% for message in Messages %}
+                {% if message.from != user.id %}
+                    <div class="outgoing_msg">
+                        <div class="sent_msg">
+                            <p> <strong>Moi</strong> : <br>{{ message.msg.Content }} </p>
+                             <!-- message.date.date  -->
+                        </div>
+                    </div>
+
+                {% else %}
+                    <div class="received_msg">
+                        <div class="received_msg">
+                            <div class="received_withd_msg">
+                                <p> <strong>{{ message.username}}</strong> : <br>
+                                {{ message.msg.Content }}</p>
+                                 <!-- message.date.date  -->
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+                                 
+                <div id="mercure-content-receiver"> <!--Div où le message sera affiché après son envoi--></div>
+      </div>
+    </div>
+      {{form_start(MessagesForm, {'action': url('message',{'id' : user.id, 'task' : 'write', 'message' : '#messages_Content' }) ,'method': 'POST'}) }}
+                    
+      {{form_row(MessagesForm.Content,{'attr': {'placeholder':"Contenu"} }) }}
+      
+      <button id ="send" type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i></button>
+      {{form_end(MessagesForm)}}
+
+            
+
+    <!-- Variable que l'on va récupèrer dans le JS -->
+    <div class="js-user-rating" data-is-authenticated="{{ user.id }}"></div>
+    
+    <div class="js-user-current" data-is-authenticated="{{ userConnect }}"></div>
+    
+    <div class="js-username" data-is-authenticated="{{ user.username }}"></div>
+    
+
+</div>
+    
+
+</section>
+
+</div>

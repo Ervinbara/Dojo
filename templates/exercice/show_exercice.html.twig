@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<h2>{{ exercices.title }}</h2>
+
+    <div class="metadata"> Ecrit le {{ exercices.createdAt | date('d/m/Y')}}</div>
+    <div class="content">
+        <img class="show_image" src="{{ vich_uploader_asset(exercices, 'imageFile') }}" alt="fotoh">
+        {{exercices.content | raw}}
+    </div>
+    
+    <section id="commentaires">
+            <h2>{{ exercices.exerciceComments | length }}Commentaire </h2>
+            {% for comment in exercices.exerciceComments %} <!--Pour chaque commentaire dans les commentaire de l'article-->
+            <div class="comment container">
+                <div class="info container">
+                    <div class="username">
+                        {{comment.author}} 
+                    </div>
+                    <div class="post_date">
+                        {{comment.createdAt | date('d/m/Y')}}
+                    </div>
+                </div>
+                <div class="text container">
+                    <div class="text">
+                        {{comment.content | raw}}
+                        {% if app.user %}
+                            {% if comment.report == 0 %}
+                                <a href="{{ path('report_e',{'id': comment.id}) }}" class="report"><acronym title="Signalé ce commentaire ?"><i class="far fa-flag"></i></acronym>
+                                </a> 
+                            {% else %}
+                            <div class="report"><acronym title="Commentaire signalé, l'admin s'en occupe"><i class="fas fa-flag"></i></acronym></div>
+                            {% endif %}
+                        {% endif %}                        
+
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor %}
+            
+            <h2>Laisse un commentaire</h2>
+            {% if app.user %}
+            <div class="container">
+                {{form_start(commentForm)}}
+            {{form_row(commentForm.content,{'attr': {'placeholder':"Contenu"} }) }}
+            <button type="submit" class="btn send">Posté</button>
+            {{form_end(commentForm)}}
+            {% else %}
+                <h3>Connexion requise</h3>
+                <a href="{{path('security_login')}}" class="btn btn-primary">Crée un compte</a>
+            {% endif %}
+            </div>
+            
+        </section>
+        {% block javacripts %}
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="{{ asset('build/js/report.js') }}"></script>
+        {% endblock %}
+{% block map %}{% endblock %}
+{% endblock %}

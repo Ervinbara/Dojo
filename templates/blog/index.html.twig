@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<section class="articles">
+    {% for article in articles %}
+    <article>
+        <h3 class="container article_title">{{ article.title }}</h3>
+        <div class="container metadata">Ecrit le {{article.createdAt | date('d/m/Y') }} </div>
+            <div class="content">
+                <div class="slug">
+                    <img class="container" src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="fotoh">
+
+                    <div class="container">{{ article.Slug | raw }} <a href="{{path('blog_show', {'id': article.id}) }}" 
+                      class="btn btn-primary">Lire la suite</a>
+                      <div><a href="{{ path('post_like', {'id': article.id}) }}" class="btn btn-link js-like">
+                        {% if app.user and article.isLikedByUser(app.user) %}
+                        <i class="fas fa-thumbs-up"></i>
+                        {% else %}
+                        <i class="far fa-thumbs-up"></i>
+                        {% endif %}
+                          <span class="js-label">J'aime</span>
+                          <span class="js-likes">{{article.likes | length}}</span>
+                        </a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        <hr class="separation">
+    </article>
+    {% endfor %}
+    <br>
+    <div class="pagination">
+      {{ knp_pagination_render(articles) }}
+    </div>
+</section>
+<!-- Code du système de Like -->
+{% block javacripts %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('build/js/like.js') }}"></script>
+{% endblock %}
+{% block map %}{% endblock %} 
+{% endblock %}

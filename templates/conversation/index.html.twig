@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+  <h3 class="text-center"><i class="icon_messagerie fas fa-comments"></i></h3>
+    <div class="messaging">
+      <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="headind_user">
+          <div class="recent_heading container">
+            <h4>Utilisateurs</h4>
+          </div>
+        </div>
+    <div class="inbox_chat">
+      <div class="chat_list active_chat">
+        <div class="chat_list">   
+          <div class="chat_people">
+            {% for member in members %}    
+            <div>
+              <a href="{{ path('talk_with',{'id': member.id}) }}" class="btn list-group-item">
+                {{member.username}} 
+                <!-- </div> -->
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="chat card"><!--Là ou on inclut la discussion--></div>
+
+<div class="loader-container">
+<!--loader-->                      
+</div>  
+
+</section>
+<div class="js-u" data-is-authenticated="{{ user.id }}"></div>   
+<div class="js-username" data-is-authenticated="{{ user.username }}"></div>
+</div>
+{% block map %}{% endblock %}
+{% block javascripts %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ asset('build/css/conversation.css') }}"> 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{ asset('build/js/chat.js') }}"></script>   
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+{% endblock %}
+{% block footer %}{% endblock %}
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Vos favoris</h1>
+<section class="articles">
+    {% for exercice in exercices %}
+        {% if app.user and exercice.isLikedByUser(app.user) %}
+        <exercice>
+            <h3 class="container exercice_title">{{ exercice.title }}</h3>
+            <div class="container metadata">Ecrit le {{exercice.createdAt | date('d/m/Y') }} </div>
+                <div class="content">
+                    <div class="slug">
+                        <img class="container" src="{{ vich_uploader_asset(exercice, 'imageFile') }}" alt="fotoh">
+                        <div class="container">{{ exercice.slug | raw }} <a href="{{path('exercice_show', {'id': exercice.id}) }}" 
+                          class="btn btn-primary">Lire la suite</a>
+                          
+                        </div>
+                    </div>
+                </div>
+            <hr class="separation">
+        </exercice>
+    
+        {% endif %}
+    {% endfor %}
+    </section>
+{% block map %}{% endblock %}
+
+
+{% endblock %}

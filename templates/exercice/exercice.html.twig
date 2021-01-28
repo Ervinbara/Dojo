@@ -1,0 +1,151 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h2>Exercice</h2>
+  <hr>
+      <div class="accordion" id="exempleAccordeon">
+        <div class="card">
+          <div class="card-header" id="header1">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Dos</button>
+          </div>
+          <div id="collapse1" class="collapse" aria-labelledby="header1" data-parent="#exempleAccordeon">
+            <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 1 %}
+                    {% include "exercice/setup_exercice.html.twig" %}
+                  {% endif %}
+            {% endfor %}
+      </div>
+    </div>
+  </div>
+           
+        <div class="card">
+          <div class="card-header" id="header2">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">Quadriceps</button>
+          </div>
+          <div id="collapse2" class="collapse" aria-labelledby="header2" data-parent="#exempleAccordeon">
+            <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 2 %}
+                    {% include "exercice/setup_exercice.html.twig" %}                
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header" id="header3">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">Ischios</button>
+          </div>
+          <div id="collapse3" class="collapse" aria-labelledby="header3" data-parent="#exempleAccordeon">
+            <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 3 %}
+                    {% include "exercice/setup_exercice.html.twig" %}
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        </div> 
+      </div>
+
+      <div class="card">
+          <div class="card-header" id="header4">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapse4">Pectoraux</button>
+          </div>
+          <div id="collapse4" class="collapse" aria-labelledby="header4" data-parent="#exempleAccordeon">
+            <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 4 %}
+                    {% include "exercice/setup_exercice.html.twig" %}
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+      </div> 
+      <div class="card">
+          <div class="card-header" id="header5">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">Epaules</button>
+          </div>
+          <div id="collapse5" class="collapse" aria-labelledby="header5" data-parent="#exempleAccordeon">
+            <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 5 %}
+                    {% include "exercice/setup_exercice.html.twig" %}
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        </div> 
+      
+
+      <div class="card">
+          <div class="card-header" id="header6">
+            <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapse6">Biceps</button>
+          </div>
+          <div id="collapse6" class="collapse" aria-labelledby="header6" data-parent="#exempleAccordeon">
+            <div class="card-body">
+              {% for exercice in exercices %}
+                {% if exercice.categoryexercice.id == 6 %}
+                  {% include "exercice/setup_exercice.html.twig" %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div> 
+
+        <div class="card">
+            <div class="card-header" id="header7">
+              <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="true" aria-controls="collapse7">Triceps</button>
+            </div>
+            <div id="collapse7" class="collapse" aria-labelledby="header7" data-parent="#exempleAccordeon">
+              <div class="card-body">
+                {% for exercice in exercices %}
+                  {% if exercice.categoryexercice.id == 7 %}
+                    {% include "exercice/setup_exercice.html.twig" %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="card">
+              <div class="card-header" id="header8">
+                <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse8" aria-expanded="true" aria-controls="collapse8">Mollets</button>
+              </div>
+              <div id="collapse8" class="collapse" aria-labelledby="header8" data-parent="#exempleAccordeon">
+                <div class="card-body">
+                  {% for exercice in exercices %}
+                    {% if exercice.categoryexercice.id == 8 %}
+                      {% include "exercice/setup_exercice.html.twig" %}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="header9">
+                  <button class="btn exo_views" type="button" data-toggle="collapse" data-target="#collapse9" aria-expanded="true" aria-controls="collapse9">Abdos</button>
+                </div>
+                <div id="collapse9" class="collapse" aria-labelledby="header9" data-parent="#exempleAccordeon">
+                  <div class="card-body">
+                    {% for exercice in exercices %}
+                      {% if exercice.categoryexercice.id == 9 %}
+                        {% include "exercice/setup_exercice.html.twig" %}
+                      {% endif %}
+                    {% endfor %}   
+                  </div>
+                </div>
+              </div>
+    </div> 
+
+    {% block javacripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('build/js/favoris.js') }}"></script>
+    {% endblock %}
+
+{% block map %}{% endblock %}
+
+{% endblock %}
+

@@ -1,0 +1,186 @@
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}DOJO Website{% endblock %}</title>
+       
+        {% block stylesheets %}
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-smnSwzHqW1zKbeuSMsAM/fMQpkk7HY11LuHiwT8snL/W2QBoZtVCT4H5x1CEcJCs" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+        {% endblock %}
+    </head>
+    <body>
+      <!--Parti affichage message Session-->      
+          {% for message in app.flashes('success') %}
+            <div id ="alert" class="alert alert-success">
+              {{ message }}
+              <a class="close">x</a>
+            </div>
+          {% endfor %}
+
+          {% block nav %}          
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+              <!-- Mise en place du logo  -->
+              {% for Logo in logo %}
+                    <a class="navbar-brand" href="{{ path('home') }}"><img class="logo" src="{{ vich_uploader_asset(Logo, 'imageFile') }}" alt="fotoh" ></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+              
+                    <div class="collapse navbar-collapse" id="navbarColor01">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ path('blog') }}">Article</a>
+                        </li>
+                        
+                        
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ path('exercice') }}">Exercice</a>
+                        </li>
+                        {% if app.user %} 
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ path('conversation') }}">Conversation</a>
+                        </li>
+                        {% endif %}
+                    
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="/admin">Administration</a>
+                        </li>                                               
+                        {% endif %}
+                        {% if not app.user %}
+                        
+                          <li class="nav-item"> 
+                             <a class="nav-link" href="{{ path('security_registration') }}">Inscription</a>
+                          </li>
+                                                                        
+                        <li class="nav-item">
+                          <a class="nav-link" href="{{ path('security_login') }}">Connexion</a>
+                        </li>                      
+                        
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('show_favoris') }}">Favoris</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('show_likes') }}">Likes</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/deconnexion">Déconnexion</a>
+                        </li>
+                        
+                        {% endif %}
+                        
+                        
+                      </ul>
+                    </div>
+                    {% endfor %}   
+                  </nav>
+                
+                  {% endblock %}  
+
+        <!-- Pour permettre l'affichage du diaporama -->
+        {% block diapo %}
+        {% endblock %}
+        
+        <div class="base container">
+          {% block body %}
+          {% endblock %}
+        </div>
+
+                
+        {% block javascripts %}
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <script src="{{ asset('build/js/session.js') }}"></script>
+        <script src="{{ asset('build/js/scroll.js') }}"></script>       
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        <script src="{{ asset('build/runtime.js') }}"></script>
+
+        {% endblock %}
+
+        {% block map %}
+          <hr>
+        <br>
+        <p id="ancre_map" class="container">Retrouvez nous sur Paris 19e !</p>
+        <section id ="contact">
+          <div class="overlay"></div>
+          <iframe class="google_maps" <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2622.8914648030227!2d2.374493915641119!3d48.89840557929151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66c2c7d64543d%3A0xeb0d0390759c82ae!2s155-219%20Boulevard%20Macdonald%2C%2075019%20Paris!5e0!3m2!1sfr!2sfr!4v1586891250209!5m2!1sfr!2sfr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          <div id="formulaire">
+            
+            {{form_start(questionForm)}}
+            <h3>Une question ? Contacter nous !</h3>
+            <p><span>DojoTeam</span><br/>Salle de sport à paris XXXXX<br/>Tél : 06 07 03 08 05</p>
+            {{form_row(questionForm.mail,{'attr': {'placeholder':"Adresse mail"} }) }}
+            {{form_row(questionForm.question,{'attr': {'placeholder':"Question"} }) }}
+            <button type="submit" class="btn btn-success">Envoyer</button>
+            {{form_end(questionForm)}}
+          </div>
+        </section>
+        {% endblock %}
+       <div id="formulaire"></div>
+        {% block footer %}
+        <footer>
+          <div class="container">
+
+            <!-- Grid row-->
+            <div class="row">
+        
+              <!-- Grid column -->
+              <div class="col-md-12 py-5">
+                <div class="mb-5 flex-center">
+        
+                  <!-- Facebook -->
+                  <a class="fb-ic">
+                    <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                  </a>
+                  <!-- Twitter -->
+                  <a class="tw-ic">
+                    <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                  </a>
+                  <!-- Google +-->
+                  <a class="gplus-ic">
+                    <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                  </a>
+                  <!--Linkedin -->
+                  <a class="li-ic">
+                    <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                  </a>
+                  <!--Instagram-->
+                  <a class="ins-ic">
+                    <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                  </a>
+                  <!--Pinterest-->
+                  <a class="pin-ic">
+                    <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
+                  </a>
+                </div>
+              </div>
+              <!-- Grid column -->
+        
+            </div>
+            <!-- Grid row-->
+        
+          </div>
+          <!-- Footer Elements -->
+        
+          <!-- Copyright -->
+          <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="#"> DojoTeam.com</a>
+          </div>
+          <!-- Copyright -->
+        
+        </footer>
+        </footer>
+        {% endblock %}
+       
+        
+        
+    </body>
+              
+</html>

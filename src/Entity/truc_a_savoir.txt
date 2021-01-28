@@ -1,0 +1,29 @@
+ObjectManager : Va nous permettre d'enregistrer des élèment dans la base de données.
+
+3 pilier :
+Doctrine : accés aux données
+1) L'ORM de Symfony : Doctrine
+ORM = Object Relationnal Mapping
+Un ORM est une brick logiciel qui fait le lien entre une application (peu importe son langage)
+et une base de donnée
+
+2) Doctrine va générer :
+    a) Des Entity :
+        -Représente une table
+    b) Les Managers :
+        - Permet de manipuler les lignes de la base de données
+    c) Les Repository :
+        -Va nous servir à seléctionne les données
+    
+Controller : Gérer les Traitement
+1) A quoi sert un controller dans symfony ?
+    -Ecouter une adresse, qu'on appelle une route (Navigateur appelle une route)
+    -Ecouter et analyser la requête http que le navigateur à envoyer à la route
+    -Fabriquer une réponse http qui soit convenable
+    -Et enfin la renvoyé au navigateur pour effectuer une actions (affichage,lancement d'un telechargement ...)
+
+Twig : Pour l'affichage
+1) Twig langage de rendu 
+    -Facilité l'écriture des affichage
+    -Apporte bcp de fonctionnalité(Boucle, conditions facilité)
+    -Abscence de php dans les fichier twig, qui va faciliter l'intégrateur à comprendre les fichier

@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+*{
+    box-sizing: border-box;
+}
+html,body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato';
+  /*overflow: hidden;*/
+}
+
+.header{
+    height: 450px;
+    width: 100%;
+    background: rgb(62,57,107);
+    position: relative;
+}
+
+.header_texture{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(../images/snow.jpg) center no-repeat;
+    background-size: cover;
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.header_mask{
+    position: absolute;
+    bottom: 0;
+    background: 0 0;
+    height: 42px;
+    width: 100%;
+    z-index: 10;
+}
+
+.header_navbar{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container{
+    width: 90%;
+    margin: auto;
+    position: relative;
+    z-index: 999;
+}
+
+.header_navbar-logo{
+    color: white;
+    
+}
+.logo{
+   font-size: 28px; 
+}
+
+.m-link{
+    margin-left: 40px;
+    color: white;
+    text-decoration: none;
+}
+.header_slogan{
+    text-align: center;
+    margin-top: 60px;
+}
+/*.bouton{
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    background: #3F51B5;
+    border-radius: 10px;
+}*/
+.slogan{
+    color: #fff;
+    font-size: 40px;
+    text-transform: uppercase;
+    font-family: "Anton";
+    font-style: italic;
+}
+
+/*Responsive du menu header*/
+.header_navbar_hamburger{
+    cursor: pointer;
+    width: 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    display: none;
+}
+
+.is-open .header_navbar-menu{
+    transform: translateY(0);
+}
+
+span.menu_hamburger, span.menu_hamburger:before, span.menu_hamburger:after{
+  display: block;
+  content:"";
+  width: 100%;
+  height: 4px;
+  border-radius: 5px;
+  background: #fff;
+  position: relative;
+  
+}
+
+span.menu_hamburger::before{
+  top:10px;
+  height: 4px;
+}
+span.menu_hamburger::after{
+  top:-14px;
+}
+
+@media only screen and (max-width:769px){
+  .header_navbar_hamburger{
+   display:flex;
+   z-index: 1000;
+  }
+  .header_navbar-menu{
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*width: 100vh;*/
+    height: 200px;;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-100%);
+   /*  background: url(../public/snow_mobile.jpg) center no-repeat;*/
+    background-size: cover;
+    z-index: 0;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    font-size: 20px;
+    width: inherit; 
+  }
+  .m-link{
+    margin: 30px 0;
+    padding: 19px;
+  }
+}

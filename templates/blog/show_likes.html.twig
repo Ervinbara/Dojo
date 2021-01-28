@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Vos likes</h1>
+<section class="articles">
+{% for article in articles %}
+    {% if app.user and article.isLikedByUser(app.user) %}
+    <article>
+        <h3 class="container article_title">{{ article.title }}</h3>
+        <div class="container metadata">Ecrit le {{article.createdAt | date('d/m/Y') }} </div>
+            <div class="content">
+                <div class="slug">
+                    <img class="container" src="{{ vich_uploader_asset(article, 'imageFile') }}" alt="fotoh">
+
+                    <div class="container">{{ article.Slug | raw }} <a href="{{path('blog_show', {'id': article.id}) }}" 
+                      class="btn btn-primary">Lire la suite</a>
+                      
+                    </div>
+                </div>
+            </div>
+        <hr class="separation">
+    </article>
+
+    {% endif %}
+{% endfor %}
+</section>
+{% block map %}{% endblock %}
+{% endblock %}

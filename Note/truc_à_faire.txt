@@ -1,0 +1,233 @@
+Unrecognized options "dir_name, namespace" under "doctrine_migrations".
+$Available options are "all_or_nothing", "check_database_platform", "connection", "custom_template", "em", "factories", "migrations", "mi$
+$", "migrations_paths", "organize_migrations", "services", "storage". in /var/www/html2/projet_5/vendor/symfony/config/Definition/ArrayNo$
+Composer.json du serveur : 
+"php": "^7.2.9",
+        "ext-pdo_sqlite": "*",
+        "doctrine/doctrine-bundle": "^1.12|^2.0",
+        "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
+        "doctrine/orm": "^2.5.11",
+        "erusev/parsedown": "^1.6",
+        "sensio/framework-extra-bundle": "^5.1",
+        "symfony/apache-pack": "^1.0",
+        "symfony/asset": "^5.1",
+        "symfony/console": "^5.1",
+        "symfony/dotenv": "^5.1",
+        "symfony/expression-language": "^5.1",
+        "symfony/flex": "^1.1",
+          "symfony/console": "^5.1",
+        "symfony/dotenv": "^5.1",
+        "symfony/expression-language": "^5.1",
+        "symfony/flex": "^1.1",
+        "symfony/form": "^5.1",
+        "symfony/framework-bundle": "^5.1",
+        "symfony/intl": "^5.1",
+        "symfony/mailer": "^5.1",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/polyfill-intl-messageformatter": "^1.12",
+        "symfony/security-bundle": "^5.1",
+        "symfony/string": "^5.1",
+        "symfony/translation": "^5.1",
+        "symfony/twig-pack": "^1.0",
+        "symfony/validator": "^5.1",
+        "symfony/webpack-encore-bundle": "^1.4",
+        "symfony/yaml": "^5.1",
+        "tgalopin/html-sanitizer-bundle": "^1.2",
+        "twig/intl-extra": "^3.0",
+        "twig/markdown-extra": "^3.0"
+
+Pour lancer mercure : 
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='https://dojo.ervinbara-projet.com' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem" ADDR=127.0.0.1:3000 ./mercure/mercure
+        'I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'
+Et pour lancer en tâche de fond : 
+
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='https://dojo.ervinbara-projet.com' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem" ADDR=127.0.0.1:3000 nohup ./mercure/mercure &
+
+
+
+Il va où lui ? : 
+- $response->headers->setCookie($cookieGenerator->generate());
+
+Lors d'une modif Nginx 
+Il est nécessaire de redémarrer le serveur à l’aide de l’une des commandes suivantes : 
+- sudo service nginx reload
+- sudo service nginx restart
+Crée une appli S : symfony new --demo dojo
+- ligne de commande et connexion ssh  :
+- mdp serveur : &P@j3!it*p
+Lancement du Hub Mercure : ./mercure --jwt-key='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' --addr=':3000'  --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://dojo.ervinbara-projet.com/'
+Extraire un fichier tar : tar xvzf file.tar.gz
+Connexion SSH : ssh u96566119@access774255436.webspace-data.io
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ADDR=':3000' CORS_ALLOWED_ORIGINS='http://dojo.ervinbara-projet.com/' DEBUG=1 ALLOW_ANONYMOUS=1 ./mercure
+
+./mercure --jwt-key='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' --addr=':3000' --debug --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://message.com/message'
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='http://dojo.ervinbara-projet.com/' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :443: bind: permission denied 
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='access774255436.webspace-data.io' addr='http://localhost:3000' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :443: bind: permission denied 
+ fonctionne ? : 
+ JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'  addr='https://dojo.ervinbara-projet.com:3000' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem"  ./mercure/mercure
+fonctionne : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='http://dojo.ervinbara-projet.com/' addr='http://localhost:3000' ./mercure/mercure
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='access774255436.webspace-data.io' addr='http://localhost:3000' ./mercure/mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='http://dojo.ervinbara-projet.com/' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='access774255436.webspace-data.io'  ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'  addr='http://localhost:3000' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+
+
+
+
+
+
+Gestion des promesses : 
+L'avantages des promesses c'est quelles vont nous permettres de chainer des opérations asynchrone
+la garantie que les opérations vont se dérouler dans l’ordre voulu et une gestion des erreurs simplifiées
+- Comprendre Axios et la gestion des promesses.
+- Enlever dans app.css, tout ce dont on à pas besoin, notamment le code lié à la page d'accueil. 
+
+
+- Commencer à préparer la Soutenance : 
+    Faire un diapo comme d'hab 
+    Trouver une fil conducteur, Mise en avant des point à expliciter
+    Travailler l'élocution, et la clarté du discours.
+        
+- Envoyer un mail :  hello@openclassrooms.com 
+
+Lancer le port 3000 qui accepte les 8000 :
+- $env:JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'; $env:ADDR='localhost:3000'; $env:DEMO='1'; $env:ALLOW_ANONYMOUS='1'; $env:CORS_ALLOWED_ORIGINS='*'; $env:PUBLISH_ALLOWED_ORIGINS='http://localhost:8000'; ./mercure/mercure       
+- https://symfony.com/doc/master/cloud/services/redis.html
+- apprentissage
+        - Compléter profil job Teaser
+        - Welcome to the jungle
+        - coding game
+        - code war
+- Déclarer truc ursaaf
+- Guitare : 
+Regarder à partir de la 10e minutes : https://www.youtube.com/watch?v=x_DPXVnUnjo&list=RD4k0j98KxBV0&index=4
+    - Prendre le temps sur "la pompes"
+    - Apprendre 3 accords "flamenco" et un kompas.
+
+donner une idée : 
+    malt.fr 
+    pistol squat
+    Lickandriff
+    bridélight le petit savoureux
+    GuitarControl
+
+The habib Show : 
+Vitamine B5 : Aide à réduire la fatigue.
+Arginine : 
+    - Quand prendre de l'arginine ?
+Pour une meilleure santé Pour améliorer votre santé vasculaire, prenez 2g d'arginine deux fois par jour,
+de préférence pendant le déjeuner et le dîner, en cours de repas.
+    A quoi sert l'arginine ? 
+La L-arginine a un effet stimulant et dilate les vaisseaux.
+Non seulement cela provoque une sensation agréable et une apparence plus ferme,
+mais améliore également l'apport en nutriments des cellules musculaires et donc les performances.
+
+Citruline : 
+A quoi sert ? 
+L'objectif de ce supplément est d'augmenter dans le sang les taux d'oxyde nitrique
+Stimuler la production d'arginine. Les compléments de L-citrulline sont surtout utilisés
+pour stimuler la synthèse endogène d'arginine. ...
+
+
+Bêta-Alanine : Non essentielle, vise plutôt les personnes fesant du sport dans un but de perfomance.
+Sert à diminuer l'acide lactique intra workout.
+
+
+Oxyde nitrique : est une molécule produite naturellement par le corps
+Sa fonction la plus importante est la vasodilations, donc la circulation du sang
+Elle est essentielle car elle permet au nutriments et à l'oxygène de circuler efficacement dans toutes les 
+parties du corps.
+
+
+
+
+
+Intêret de Testoid :
+
+
+
+Vidéo à regarder : 
+Guitare : 
+- Learn THIS SPICY New Chord to Standout - R&B Guitar Lesson by Kerry 2 Smooth
+- Apprendre à chanter
+code : 0qzcfP
+
+
+Code conversation_show : 
+   <div class="example-wrapper">
+        <h1>Messages privé</h1>
+            <section class="conversation">
+                <div class="container">
+                    <div class="col-md-3">
+                        <div class="people list-group">
+                            {% for member in members %} 
+                            <a class="list-group-item" href="{{ path('talk_with',{'id': member.id}) }}">
+                            {{member.username}} </a><br>   
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header msg_head">
+                            <div class="d-flex bd-highlight">
+                              <div class="user_info">
+                                <span>Discussion avec <strong>{{ user.username }}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="chat">
+                                {% for message in Messages %}
+                                    {% if message.from != user.id %}
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="message">
+                                            <div id="right">
+                                                <span> <strong>Moi</strong> : <br>{{ message.msg.Content }}</span>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                  
+                                    {% else %}
+                                    
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="message">
+                                            <div id="left">
+                                                <span> <strong>{{ message.username}}</strong> : <br>
+                                                    {{ message.msg.Content }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+
+
+
+Commande Alt + fleche directionnellle : Déplace la ligne
+

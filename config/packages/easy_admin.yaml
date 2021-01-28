@@ -1,0 +1,131 @@
+easy_admin:
+    # On définit le nom de l'interface d'administration 
+    site_name: 'DOJO ADMIN'
+    user:
+        display_name: false
+        display_avatar: false
+    design:
+        menu :
+          - {label: "Ajout/Modification"}
+          - label: "Articles"
+            children:
+              - {entity: Article, label: "Liste d'articles", icon: "th-list"} 
+              - {entity: Article, label: "Add post",property: 'content', type: 'fos_ckeditor', type_options: { config_name: 'main_config' }, icon: "plus", params: {action: 'new'}}
+              
+          - label: "Exercice"
+            children:
+              - {entity: Exercice, label: "Liste d'exercice", icon: "th-list"} 
+              - {entity: Exercice, label: "Add post", icon: "plus", params: {action: 'new'}}
+
+          - {entity: User, label: "Utilisateurs", icon: "user"} 
+          
+          - {entity: Logo, label: "Logo", icon: "image"}
+          
+          - label: "Commentaires"
+            children:
+              - {entity: Comment, label: "Commentaires_Articles", icon: "text"}
+              - {entity: ExerciceComment, label: "Commentaires_Exercices", icon: "text"}
+
+          # - {entity: ExerciceComment, label: "Commentaires_exercices", icon: "text"}
+
+          - { label : 'Retour au site', icon: 'home', route: 'home' } 
+        form_theme:
+            - "@EasyAdmin/form/bootstrap_4.html.twig"
+            - "@FOSCKEditor/Form/ckeditor_widget.html.twig"
+      
+        
+    entities:
+      # - App\Entity\Article
+      # - App\Entity\Exercice
+      # - App\Entity\User
+      # - App\Entity\Logo
+      Article:
+        class: App\Entity\Article
+        label: "Articles"
+        form:
+          fields:
+            - {type: 'group', icon: 'pencil', label: 'Zone de création'}
+            - title
+            # Affichage de l'éditeur Wysiwyg
+            - {property: 'content', type: 'text_editor'}
+            - {property: 'Slug', type: 'text_editor'}
+            - {property: 'imageFile', type: 'vich_image', label: 'Image' }
+            - {property: 'createdAt'}
+            - {property: 'category'}
+        
+        list:
+          collapse_actions: true
+          actions: ['edit', 'delete']
+          batch_actions: ['delete']
+          title: "Ensemble des articles du DOJO"
+      
+      Exercice:
+        class: App\Entity\Exercice
+        label: "Exercice"
+        form:
+          fields:
+            - {type: 'group', icon: 'pencil', label: 'Zone de création'}
+            - title
+            # Affichage de l'éditeur Wysiwyg
+            - {property: 'content', type: 'text_editor'}
+            - {property: 'slug', type: 'text_editor'}
+            - {property: 'imageFile', type: 'vich_image', label: 'Image' }
+            - {property: 'createdAt'}
+            - {property: 'categoryExercice'}
+        
+        list:
+          collapse_actions: true
+          actions: ['edit', 'delete']
+          batch_actions: ['delete']
+          title: "Ensemble des exercices du DOJO"
+        
+      User:
+        class: App\Entity\User
+        label: 'Utilisateurs'
+        list:
+          fields:
+            - id
+            - email
+            - {property: 'roles', label: 'Rôles', type: json_array}
+        form:
+          fields:
+                   
+            - { property: 'roles', label: 'Roles', type: choice, type_options: { expanded: 
+              true, multiple: true, choices: {'Utilisateurs': 'ROLE_USER', 'Administrateur':'ROLE_ADMIN'}}}
+
+      Logo:
+        class: App\Entity\Logo
+        form:
+          fields:
+            - {property: 'imageFile', type: 'vich_image', label: 'Image' }
+
+      Comment:
+        class: App\Entity\Comment   
+        form:
+          fields:
+            - {property: 'author'}
+            - {property: 'content'}
+            - {property: 'createdAt'}
+            - {property: 'report'}
+        list:
+            collapse_actions: true
+            actions: ['show', 'delete']
+            batch_actions: ['delete']
+            title: "Liste des commentaire"
+        
+      ExerciceComment:
+        class: App\Entity\ExerciceComment   
+        form:
+          fields:
+            - {property: 'author'}
+            - {property: 'content'}
+            - {property: 'categoryExercice'}
+            - {property: 'createdAt'}
+            - {property: 'report'}
+        list:
+            collapse_actions: true
+            actions: ['show', 'delete']
+            batch_actions: ['delete']
+            title: "Liste des commentaire"
+      
+ 

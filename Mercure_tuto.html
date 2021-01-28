@@ -1,0 +1,271 @@
+Site : https://blog.dev-web.io/2020/02/17/developpons-un-chat-avec-symfony-mercure-et-vue-js/
+Aller au contenu
+dev-web.io
+
+Un peu de code, beaucoup de Symfony
+
+Développons un Chat avec Symfony, Mercure et Vue.js !
+Suite au Symfonylive 2019 et à la présentation de Mercure par l’excellent Kevin Dunglas (@dunglas) (ça se voit que je suis fan ??) j’avais toujours dans un coin de ma tête de développer un chat avec ces technos, alors c’est parti !
+
+Pour ce tuto il faut savoir que Symfony n’est pas indispensable, j’aurai très bien pu m’en passer, mais si vous voulez y ajouter une connexion utilisateur, ou stocker les messages de chat ce sera mieux !
+Dans ce chat n’importe qui pourra poster n’importe quoi ! Mais la discussion sera effacé après rechargement de la page !
+
+Comme d’habitude, vous pourrez retrouver les sources sur mon github :
+
+https://github.com/gponty/sf4chatMercure
+
+Et une démo ici du tuto terminé (avec un peu plus de joli) :
+
+http://chat.dev-web.io/
+
+Il faut savoir que le dev d’un tel chat est hyper simple, là où ça c’est grandement plus compliqué c’est pour la mise en prod et plus particulièrement de mercure (avec docker), c’est pour cette raison que entre autre la démo n’est pas en HTTPS.
+
+On va commencer par installer tout ce qu’il nous faut, c’est à dire :
+
+Symfony
+Vue.js
+Mercure (en utilisant une image docker)
+Installation de Symfony
+Pour Symfony rien de plus simple, mais je vous redonne la procédure :
+
+wget https://get.symfony.com/cli/installer -O - | bash
+/your_home_directory/.symfony/bin/symfony new sf4chatMercure
+Installation de Vue.js
+Pour vue.js c’est un peu plus compliqué mais rien de transcendant non plus :
+
+composer require symfony/webpack-encore-bundle
+yarn install
+Vous ajoutez cette ligne dans le fichier webpack.config.js :
+
+.enableVueLoader()
+Puis on installe les bibliothèques vue.js :
+
+yarn add vue vue-loader@^15.0.11 vue-template-compiler --dev
+Installation de Mercure
+On va d’abord installer le Hub de Mercure, c’est lui qui va se charger de dispatcher les messages du chat aux navigateurs (ou toutes autres plateformes). Il y a plusieurs méthodes pour cela, moi je passe par une image docker :
+
+docker run \
+    -e JWT_KEY='!ChangeMe!' -e DEMO=1 -e ALLOW_ANONYMOUS=1 -e CORS_ALLOWED_ORIGINS=* -e PUBLISH_ALLOWED_ORIGINS='http://chatblog.localhost' \
+    -p 3000:80 \
+    dunglas/mercure
+Pour installer le composant Symfony :
+
+ composer require mercure
+Vous allez devoir générer un token JWT grâce à la clé que vous avez mis dans votre container (JWT_KEY), vous pouvez vous aider de ce site : https://jwt.io/
+
+Il faut ensuite modifier les 2 lignes suivantes dans votre fichier .env.local :
+
+MERCURE_PUBLISH_URL=http://chat.localhost:3000/.well-known/mercure
+MERCURE_JWT_TOKEN=VotreJWTtoken
+
+Une fois cette configuration faites on va entrer dans le vif du sujet et créer le controller qui va publier les messages, comme on est feignant on va utiliser le maker de symfony :
+
+composer req --dev maker
+composer require doctrine/annotations
+php bin/console make:controller PublisherController
+Pour ce controller on a juste besoin du message à envoyer (bien entendu dans une version plus poussée il faudrait par exemple aussi un Id user, dans la demo j’envoie un id qui me sert juste pour une question de design)
+
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\Publisher;
+use Symfony\Component\Mercure\Update;
+use Symfony\Component\Routing\Annotation\Route;
+
+class PublisherController extends AbstractController
+{
+    /**
+     * @Route("/publish", name="publish", methods={"POST"})
+     * @param Request $request
+     * @param Publisher $publisher
+     * @return Response
+     */
+    public function publish(Request $request, Publisher $publisher): Response
+    {
+        $data = json_decode($request->getContent());
+
+        $update = new Update(
+            'http://chat.localhost',
+            json_encode(
+                [
+                    'message' => $data->message
+                ]
+            )
+        );
+
+        // The Publisher service is an invokable object
+        $publisher($update);
+
+        return new Response('published!');
+    }
+}
+Pour voir si cela fonctionne vous pouvez faire le test avec une commande Curl :
+
+curl --request POST \
+  --url 'http://chatblog.localhost/publish?=' \
+  --header 'content-type: application/json' \
+  --data '{
+	"message" : "Mercure rocks !"
+}'
+Si tout va bien vous devriez voir le message « Published » ainsi qu’une ligne dans les logs de mercure.
+
+C’est bien beau ça mais l’idéal serait maintenant d’afficher ces messages ! Et évidemment sans avoir à rafraîchir la page !
+
+Et ça là où intervient l’excellent vue-js !
+
+Il nous faut d’abord créer un controller qui va afficher notre page :
+
+composer req symfony/twig-pack
+php bin/console make:controller ChatController
+<?php
+//src/Controller/ChatController.php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ChatController extends AbstractController
+{
+    /**
+     * @Route("/", name="chat")
+     */
+    public function index()
+    {
+        return $this->render('chat.html.twig');
+    }
+}
+Et le template qui va avec (/templates/chat.html) :
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Chattons !{% endblock %}</title>
+        {{ encore_entry_link_tags('app') }}
+    </head>
+    <body>
+    <div id="app">
+        <chat></chat>
+    </div>
+
+        {{ encore_entry_script_tags('app') }}
+    </body>
+</html>
+les 2 lignes « encore_entry…. » vont ajoutés automatiquement les fichiers css et javascripts générés par webpack grâche à la commande yarn watch
+La partie id= « app » et <chat> sera notre composant vue.js
+On va d’ailleurs créer 2 composants : l’affichage des messages, et le message en lui même.
+Afin de simplifier le code je ne vais pas faire de « jolie » (donc pas de bootstrap :), j’ai quand même installé la lib JS moment qui va permettre de formater l’heure d’arrivée du message :
+
+yarn add moment
+yarn watch
+On va créer le composant message, qui va être très très simple, on passe juste le texte du message en props :
+
+<template>
+    <div>
+        <p>
+            {{ message }}
+        </p>
+        <time>{{ datetimePost }}</time>
+    </div>
+</template>
+<script>
+    import moment from 'moment';
+
+    export default {
+        name: "messagechat",
+        props: [
+            'message'
+        ],
+        data() {
+            return {
+                datetimePost: moment().format('H:mm:ss')
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
+Puis le composant qui va afficher les messages (le plus « compliqué »):
+
+<template>
+    <div>
+        <div>
+            <span v-for="m in messages">
+                <message-chat :message="m.message"></message-chat>
+            </span>
+        </div>
+        <div>
+            <form @submit="submitMessage">
+                <input type="text" v-model='messageEnCours' class="form-control" placeholder="Say something">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    import MessageChat from "./MessageChat";
+
+    export default {
+        name: "chat",
+        components: {MessageChat},
+        data() {
+            return {
+                messages: [
+                    {message: 'Salut, ça va ?'},
+                    {message: 'ça biche et toi ?'}
+                ],
+                messageEnCours: ''
+            }
+        },
+        mounted: function () {
+            const url = new URL('http://localhost:3000/.well-known/mercure');
+            url.searchParams.append('topic', 'http://chat.localhost');
+            const eventSource = new EventSource(url);
+
+            eventSource.onmessage = e => {
+                console.log('Nouveau message');
+                const data = JSON.parse(e.data);
+                this.messages.push({message: data.message});
+                this.messageEnCours = '';
+            }
+        }
+        ,
+        methods: {
+            submitMessage: function (e) {
+
+                const postData = JSON.stringify({message: this.messageEnCours});
+                const param = {
+                    method: "POST",
+                    body: postData
+                };
+
+                fetch('/publish', param)
+                    .then(data => {
+                        console.log('Ils sont partiiiiiss !!!!');
+                    })
+                    .catch(error => console.log(error));
+
+                e.preventDefault();
+            }
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
+Ici le bloc important est l’écoute du hub (ce qui se trouve dans la partie mounted) , à chaque fois qu’un message va être transmis au HUB il sera dispatché sur les differents clients.
+
+Vous pouvez maintenant faire un test en lançant 2 navigateurs et magie ils recevront tous les 2 les messages.
+
+That’s all !
+

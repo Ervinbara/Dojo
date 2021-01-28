@@ -1,0 +1,78 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+        # App\Entity\Ad:
+        #     algorithm: bcrypt       
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+        in_memory:
+            memory:
+                users:
+                    foo@gmail.com: { password: '123456' }
+        user_db:
+            entity:
+                class: App\Entity\User
+                property: email
+    access_denied_url: home
+
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        ##ici
+        # login:
+        #     pattern: ^/api/login
+        #     stateless: true
+        #     anonymous: true
+        #     json_login:
+        #         check_path: /api/login_check
+        #         success_handler: lexik_jwt_authentication.handler.authentication_success
+        #         failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        # api:
+        #     pattern: ^/api
+        #     stateless: true
+        #     guard:
+        #         authenticators:
+        #             - lexik_jwt_authentication.jwt_token_authenticator
+        main:
+            #access_denied_handler: App\Controller\AccessDeniedHandler
+            anonymous: true
+            provider: user_db
+
+            form_login:
+                login_path: security_login
+                check_path: security_login
+            
+            logout:
+                path: /deconnexion
+                target: blog
+        main_memory:
+            
+            anonymous: true
+            provider: in_memory
+
+            form_login:
+                login_path: security_login
+                check_path: security_login
+            
+            logout:
+                path: /deconnexion
+                target: blog
+            
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

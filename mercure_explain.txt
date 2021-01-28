@@ -1,0 +1,128 @@
+Pour installer Mercure, nous allons télécharger la dernière release stable disponible sur page des releases et l’extraire dans un dossier mercure.
+
+Cette archive contient deux choses principales :
+
+un dossier public avec les assets nécessaires à la page de débug de Mercure
+et l’exécutable qui est le fameux hub dont nous avons parlé.
+Avant de continuer, nous modifions le .gitignore pour ignorer les updates Mercure :
+
+# .gitignore
+###> mercure ###
+updates.db
+###< mercure ###
+
+
+# config/packages/mercure.yaml - On remplace :
+jwt: '%env(MERCURE_JWT_TOKEN)%'
+# par :
+jwt_provider: App\Mercure\JwtProvider
+
+# config/services.yaml - On ajoute la configuration du service
+
+App\Mercure\JwtProvider:
+    arguments:
+        $secret: '%env(MERCURE_JWT_KEY)%'
+
+Voilà, notre générateur est prêt. Mais avant de pouvoir entrer dans le vif du sujet, 
+nous allons avoir besoin de quelques gâteaux (ou presque).
+
+
+// config/services.yaml
+App\Mercure\CookieGenerator:
+    arguments:
+        $secret: '%env(MERCURE_JWT_KEY)%'
+
+# config/packages/twig.yaml
+# Après la déclaration du default_path
+globals:
+    mercure_publish_url: '%env(MERCURE_PUBLISH_URL)%'
+
+
+MERCURE_JWT_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOltdfX0.Oo0yg7y4yMa1vr_bziltxuTCqb8JVHKxp-f_FwwOim0
+
+
+Matched route "" request_uri "method":"GET"
+
+chmod +rwx -R config/packages
+chmod +rwx -R services.yaml et route
+
+
+localhost:3000/.well-known/mercure?topic=http%3A%2F%2Fmessage.com%2Fmessage:1 GET http://localhost:3000/.well-known/mercure?topic=http%3A%2F%2Fmessage.com%2Fmessage net::ERR_CONNECTION_REFUSED
+
+
+2localhost:3000/.well-known/mercure?topic=http%3A%2F%2Fmessage.com%2Fmessage:1 GET http://localhost:3000/.well-known/mercure?topic=http%3A%2F%2Fmessage.com%2Fmessage net::ERR_CONNECTION_REFUSED
+
+● nginx.service - A high performance web server and a reverse proxy server
+   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Tue 2020-06-30 16:35:55 UTC; 7s ago
+     Docs: man:nginx(8)
+  Process: 60319 ExecStop=/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid (code=exited, status=0/SUCCESS)
+  Process: 33089 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+  Process: 60352 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=1/FAILURE)
+ Main PID: 33091 (code=exited, status=0/SUCCESS)
+
+Jun 30 16:35:55 localhost systemd[1]: Starting A high performance web server and a reverse proxy server...
+Jun 30 16:35:55 localhost nginx[60352]: nginx: [emerg] BIO_new_file("/path/to/ssl/cert.crt") failed (SSL: error:02001002:system library:fopen:No such file or direJun 30 16:35:55 localhost nginx[60352]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jun 30 16:35:55 localhost systemd[1]: nginx.service: Control process exited, code=exited status=1
+Jun 30 16:35:55 localhost systemd[1]: nginx.service: Failed with result 'exit-code'.
+Jun 30 16:35:55 localhost systemd[1]: Failed to start A high performance web server and a reverse proxy server.
+
+Sur la console : 
+- http: TLS handshake error from 185.173.35.33:57686: acme/autocert: server name contains invalid character
+- TLS handshake error from 193.118.53.202:49770: acme/autocert: host "217.160.250.140" not configured in HostWhitelist
+
+/var/log/nginx/error.log
+- BIO_new_file("/path/to/ssl/cert.crt")$.crt") failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/path/to/ssl/cert.crt','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+
+Dans le fichier proxy_params de nginx je vois ça : 
+- proxy_set_header Host $http_host;
+- proxy_set_header X-Real-IP $remote_addr;
+- proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+- proxy_set_header X-Forwarded-Proto $scheme;
+
+https://github.com/dunglas/mercure/issues/106
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name https://dojo.ervinbara-projet.com/;
+
+    ssl_certificate /path/to/ssl/cert.crt;
+    ssl_certificate_key /path/to/ssl/cert.key;
+
+    location / {
+        proxy_pass http://localhost:3000/.well-known/mercure;
+        proxy_read_timeout 24h;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+
+        ## Be sure to set USE_FORWARDED_HEADERS=1 to allow the hub to use those headers ##
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+systemctl status nginx.service : 
+Jul 01 16:17:42 localhost systemd[1]: Starting A high performance web server and a reverse 
+proxy server...
+Jul 01 16:17:42 localhost nginx[87400]: nginx: [emerg] BIO_new_file("/path/to/ssl/cert.crt") failed (SSL: error:Jul 01 16:17:42 localhost nginx[87400]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jul 01 16:17:42 localhost systemd[1]: nginx.service: Control process exited, code=exited status=1
+Jul 01 16:17:42 localhost systemd[1]: nginx.service: Failed with result 'exit-code'.
+Jul 01 16:17:42 localhost systemd[1]: Failed to start A high performance web server and a reverse proxy server.
+
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='http://dojo.ervinbara-projet.com/' USE_FORWARDED_HEADERS=1 addr='http://localhost:3000' ./mercure/mercure 
+
+
+Info : 
+Also, if you use Let’s Encrypt, you must use the default port (not 8080). Can you try to remove the ADDR env var?
+We must update the readme to make that clearer.
+
+CookieGenerator : 
+Dans le cadre de cet article, nous allons générer un cookie « basique » (non sécurisé et en HttpOnly),
+pour des raisons de simplicité. Mais si vous souhaitez utiliser ces fonctionnalités en production,
+il est vivement recommandé de passer l’ensemble en HTTPS.
+
+Js https : 
+const url = new URL('https://example.com/.well-known/mercure');
+url.searchParams.append('topic', 'https://example.com/foo');

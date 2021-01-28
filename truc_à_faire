@@ -1,0 +1,220 @@
+Missions refonte projet dojo : 
+HOME PAGE : 
+Apparition des derniers articles à refaire.
+Donner un "Coup de punch visuel" au site en général
+- Redimentionner les images
+
+
+Pour Renouvelez le certificat letsencrypt :
+1 ) Stopper le serveur Nginx : 
+    - sudo service nginx stop
+
+2) Génération d'un certificat :
+Se rendre dans /opt/letsencrypt et lancer la commande suivante : 
+    - sudo certbot-auto certonly --standalone -d chat.ervinbara-projet.com
+
+3) Relancer le serveur
+    - sudo service nginx start
+
+
+Candidature dans toute la France
+Harcelez un peu plus 
+
+A faire consciensement : 
+
+Préparer son entretien de recrutement - France
+
+Construisez votre projet professionnel
+
+Prenez la parole en public
+
+Faire l’inventaire de ses compétences
+
+Entretien 
+Prendre son temps, entre 30 et 45 seconde pas réponse par réponse.
+
+- Terminer la vdo grafikart sur react et APIplatform : 
+    https://www.youtube.com/watch?v=8T8oN-now9Y  (6.07 min)
+
+- Renouvelez le certificat letsencrypt de chat.ervinbara... 
+    https://www.grafikart.fr/tutoriels/nginx-ssl-letsencrypt-747
+    
+- Regarder comment gérer un entretien d'embauche pour une alternance
+
+- Faire une fiche des avantages de la méthode agiles : 
+    https://www.planzone.fr/blog/quest-ce-que-la-methodologie-agile
+
+
+
+Regarder si la version php du e-portofilio est la bonne, sinon on va payer pour le 
+maintien 1&1, si c'est flou n'hésite pas à call batârd tu paye 
+
+Postuler ici : 
+https://jobs.lever.co/matchgroup/484b4fa1-e066-4695-92e4-9dcc4f23b962/apply
+
+Remplir l'onglet formation comme la uiss : 
+https://www.linkedin.com/in/fredy-mendes-912699173/
+
+
+Si on fait une candidature spontané on parle avec le lead développeur
+
+
+- Travail : 
+Terminer ce cours sur les tests techniques : 
+- https://openclassrooms.com/fr/courses/6045521-preparez-vous-aux-tests-techniques-pour-devenir-developpeur/6171136-preparez-vous-aux-discussions-techniques
+
+S'entrainer sur : 
+- https://www.codingame.com/start
+Et 
+- https://tests-psychotechniques.appspot.com/index-m.jsp
+
+API : C'est une interface qui est utilisé par des programmes pour intéragir sur des applications
+
+- Revoir les vidéo de formation sur symfony de Lior.
+
+- Faire une speech pour démarcher les entreprises, expliquer rapidement qui ont est 
+et faire en sorte que le speech soit personnalisée en fonction de l'entrepise ciblé.
+
+
+
+Remplir le formulaire pour l'assignation d'un coach.
+
+Création page d'erreur 404 : 
+- composer require symfony/twig-pack
+- Crée un dossier bundles dans le dossier templates.
+    - Dans le dossier bundles crée un dossier TwigBundle
+        - Dans le dossier TwigBundle crée un nouveau dossier nommé Exception
+            - Dans Exception crée un fichier error404.html.twig
+                - Afficher le code l'erreur {{ status_code }}
+
+
+Mercure Speech : 
+JWT :
+Mercure utilise les JSON Web Tokens pour sécuriser l’ensemble des échanges
+- Les jetons Web JSON sont une méthode RFC 7519 ouverte et standard de l'industrie,
+pour représenter les revendications en toute sécurité entre deux parties.
+Dans le fichier JWT provider on crée un générateur de JWT.
+En modifiant le ['*'], on peut spécifier une liste d’urls sur lesquelles le token peut publier des mises à jour.
+
+
+Cookie genérator : 
+Pour pouvoir authentifier les utilisateurs qui souhaitent se connecter au Mercure Hub il existe différentes méthode, 
+nous Comme notre Chat est utilisé depuis un navigateur web, On va utilisée des cookie.
+nous allons créer un générateur de cookies.
+Et le subscribe' => ['*'] permet, lui aussi, de s’abonner à toutes les urls 
+
+JS:
+L’initialisation de la connexion se fait via une URL. Elle s’abonne aux mises à jour d’un certain nombre de topics.
+Dans notre cas, il n’y en a qu’un seul, mais on peut bien sûr en mettre autant que l’on souhaite
+(en dupliquant et modifiant cette ligne).
+Cette URL va être ensuite connectée à un EventSource pour pouvoir récupérer les messages avec la méthode onmessage.
+
+Dans le update du publish Controlleur : 
+Le composant Mercure fournit un Objet Update représentant la mise à jour à publier 
+Donc nous enverrons un Update au MessageBus de symfony avec comme paramètres :
+l’url du topic que nous avons défini et les paramètres à envoyer, et il sera traité directement, et encodés en JSON, pour que l'on puisse
+l'exploité en javascript.
+
+Eventsource : 
+L'interface EventSource est utilisée afin de recevoir des évènements envoyés par le serveur.
+Elle se connecte à un serveur via HTTP et reçoit des évènements au format text/event-stream
+avant de clôturer la connexion.
+
+
+Gestion des promesses : 
+L'avantages des promesses c'est quelles vont nous permettres de chainer des opérations asynchrone
+la garantie que les opérations vont se dérouler dans l’ordre voulu et une gestion des erreurs simplifiées
+
+
+
+Pour lancer mercure : 
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='https://dojo.ervinbara-projet.com' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem" ADDR=127.0.0.1:3000 ./mercure/mercure
+        'I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'
+Et pour lancer en tâche de fond : 
+
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='https://dojo.ervinbara-projet.com' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem" ADDR=127.0.0.1:3000 nohup ./mercure/mercure &
+
+- Commande de génération de certificat letsencrypt : 
+certonly -d chat.ervinbara-projet.com -m ervinbara17@gmail.com --agree-tos -a webroot --webroot-path /var/www/html2/
+
+Il va où lui ? : 
+- $response->headers->setCookie($cookieGenerator->generate());
+
+Lors d'une modif Nginx 
+Il est nécessaire de redémarrer le serveur à l’aide de l’une des commandes suivantes : 
+- sudo service nginx reload
+- sudo service nginx restart
+
+Vider le cache Nginx : 
+
+Réattribuer les droits au dossier : 
+chown -R www-data: var/cache/prod
+
+Crée une appli S : symfony new --demo dojo
+- ligne de commande et connexion ssh  :
+- ssh root@217.160.250.140
+- mdp serveur : &P@j3!it*p
+
+Lancement du Hub Mercure : ./mercure --jwt-key='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' --addr=':3000'  --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://dojo.ervinbara-projet.com/'
+Extraire un fichier tar : tar xvzf file.tar.gz
+Connexion SSH : ssh u96566119@access774255436.webspace-data.io
+JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ADDR=':3000' CORS_ALLOWED_ORIGINS='http://dojo.ervinbara-projet.com/' DEBUG=1 ALLOW_ANONYMOUS=1 ./mercure
+
+./mercure --jwt-key='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' --addr=':3000' --debug --allow-anonymous --cors-allowed-origins='*' --publish-allowed-origins='http://message.com/message'
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='http://dojo.ervinbara-projet.com/' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :443: bind: permission denied 
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='access774255436.webspace-data.io' addr='http://localhost:3000' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :443: bind: permission denied 
+ fonctionne ? : 
+ JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'  addr='https://dojo.ervinbara-projet.com:3000' CERT_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/fullchain.pem" KEY_FILE="/etc/letsencrypt/live/dojo.ervinbara-projet.com/privkey.pem"  ./mercure/mercure
+fonctionne : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' ACME_HOSTS='http://dojo.ervinbara-projet.com/' addr='http://localhost:3000' ./mercure/mercure
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='access774255436.webspace-data.io' addr='http://localhost:3000' ./mercure/mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='http://dojo.ervinbara-projet.com/' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY' acme_http01_add='access774255436.webspace-data.io'  ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+Commande : 
+- JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'  addr='http://localhost:3000' ./mercure
+Erreur : 
+- FATA[0000] listen tcp :80: bind: permission denied
+
+
+
+Lancer le port 3000 qui accepte les 8000 :
+- $env:JWT_KEY='I-c4N_H@Z{M3rCuR3}&SymF0nY~1n~AFSY'; $env:ADDR='localhost:3000'; $env:DEMO='1'; $env:ALLOW_ANONYMOUS='1'; $env:CORS_ALLOWED_ORIGINS='*'; $env:PUBLISH_ALLOWED_ORIGINS='http://localhost:8000'; ./mercure/mercure       
+- https://symfony.com/doc/master/cloud/services/redis.html
+- apprentissage
+        - Compléter profil job Teaser
+        - Welcome to the jungle
+        - coding game
+        - code war
+- Déclarer truc ursaaf
+- Guitare : 
+Regarder à partir de la 10e minutes : https://www.youtube.com/watch?v=x_DPXVnUnjo&list=RD4k0j98KxBV0&index=4
+    - Prendre le temps sur "la pompes"
+    - Apprendre 3 accords "flamenco" et un kompas.
+
+donner une idée : 
+    malt.fr 
+    pistol squat
+    Lickandriff
+    bridélight le petit savoureux
+    GuitarControl

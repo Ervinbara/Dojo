@@ -1,0 +1,129 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-smnSwzHqW1zKbeuSMsAM/fMQpkk7HY11LuHiwT8snL/W2QBoZtVCT4H5x1CEcJCs" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('build/css/app_home.css') }}">
+
+{% endblock %}
+{% block diapo %}
+<!-- Diaporama -->
+    <section> 
+      
+        <div id="diaporama">
+          <div class="overlay_diapo"></div>
+          <div class="text_diapo">
+            <span>DOJO</span>
+          </div>
+          <div class="icon_diapo"><a class="js-scrollTo" href="#ancre"><i class="fas fa-angle-double-down"></i></a></div>
+
+          <div id="caroussel">
+                <button id="bouttonGauche"><i class="fas fa-chevron-left fa-2x"></i></button>
+                
+                <button id="bouttonDroit"><i class="fas fa-chevron-right fa-2x"></i></button>
+        {% for image in uploads %}
+        {% if image.id == 2 %} 
+          <figure class="item">
+               
+              <img background: src="{{ image.image }}" center no-repeat;>
+          </figure>
+        {% endif %}
+
+        {% if image.id == 3 %} 
+          <figure class="item">
+              
+              <img background: src="{{ image.image }}" center no-repeat;>
+          </figure>
+        {% endif %} 
+        
+        {% if image.id == 4 %} 
+          <figure class="item">
+              
+              <img background: src="{{ image.image }}" center no-repeat;>
+          </figure>
+        {% endif %}
+        
+        {% if image.id == 5 %} 
+          <figure class="item">
+              
+              <img background: src="{{ image.image }}" center no-repeat;>
+          </figure>
+        {% endif %}
+        
+        {% if image.id == 6 %} 
+          <figure class="item">      
+              <img background: src="{{ image.image }}" center no-repeat;>
+          </figure>
+        {% endif %}
+
+          {% endfor %}
+        </div>
+         
+          <div id="ancre">
+            {# Ancrage qui somme nous ? #}
+          </div> 
+      
+        </div>
+      </section>
+      <section  class="container goal fade-in">
+        <h2 class="main_page_intro">Qui sommes nous ?</h2>
+        <div class="triangle">
+          <hr/>
+        </div>
+        <p>Texte descriptif des différentes fonctions du site, et de ce que l'on peux faire dessus
+          lorem Socrate (en grec ancien : Σωκράτης / Sōkrátēs [sɔːkratɛːs]1) est un philosophe grec
+          du ve siècle av. J.-C. (né vers -470/469, mort en -399). Il est connu comme l’un des créateurs
+          de la philosophie morale. Socrate n’a laissé aucun écrit, sa pensée et sa réputation se sont 
+          transmises par des témoignages indirects. Ses disciples, Platon et Xénophon, 
+          ont notablement œuvré à maintenir l'image de leur maître, 
+          qui est mis en scène dans leurs œuvres respectives. 
+          Les philosophes Démétrios de Phalère,
+           et Maxime de Tyr dans sa Neuvième Dissertation2 ont écrit que Socrate est mort à l’âge de 70 ans. Déjà renommé de son vivant, Socrate est devenu l’un des penseurs les plus illustres de l'histoire de la philosophie. Sa condamnation à mort et sa présence très fréquente dans les dialogues de Platon ont contribué à faire de lui une icône philosophique majeure. La figure de Socrate a été discutée, reprise, et réinterprétée jusqu'à l'époque contemporaine. Socrate est ainsi célèbre au-delà de la sphère philosophique, et son personnage entouré de légendes. En dépit de cette influence culturelle, très peu de choses sont connues avec certitude sur le Socrate historique et ce qui fait le cœur de sa pensée. Les témoignages sont souvent discordants et la restitution de la vie ou la pensée originelle de Socrate est une approche sur
+          <strong href="#ancre_map" class="ancre_map js-scrollTo">Cliquez pour voir la carte !</strong></p>
+      
+      </section>
+      <hr>
+      <!--Corps de l'accueil-->
+      <h3 class="fade-in title_last_news"> <span>Les derniers articles</span></h3>
+      <div class="zoom more-stuff-grid">
+            {% for image in last_image %}
+              <div class="col slide-in from-left">
+                <a href="{{ path('blog_show', {'id': image.id}) }}">
+                 <img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="image de nutrition" >
+                </a>
+              </div>
+              <div class="slide-in from-right">
+                <p>{{image.Slug | raw}}</p>
+              </div>
+            {% endfor %} 
+      </div>
+
+      <hr>
+      
+      <h3 class="fade-in title_last_news"> <span>Les derniers exercices</span> </h3>
+        <div class="zoom more-stuff-grid">
+              {% for last_exercice in last_exercice %}
+              <div class="col slide-in from-left">
+                <a href="{{ path('exercice_show', {'id': last_exercice.id}) }}"> 
+                  <img src="{{ vich_uploader_asset(last_exercice, 'imageFile') }}" alt="image de sport">
+                </a>
+              </div>
+              <div class="slide-in from-right">
+                <p>{{last_exercice.slug | raw}}</p>
+              </div>
+              {% endfor %}  
+        </div>
+      <div class="go_back"> 
+        <a class="js-scrollTo" href="#ancre"><i class="fas fa-angle-double-up fa-2x"></i></a> 
+      </div>
+{# Fonction js pour faire défiler le diapo ect ... #}
+{% block javascripts %} 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{{ asset('build/js/app.js') }}"></script>
+<script src="{{ asset('build/js/scroll.js') }}"></script>
+<script src="{{ asset('build/js/bg_menu_scroll.js') }}"></script>
+<script src="{{ asset('build/js/observer.js') }}"></script>
+{% endblock %}
+{% endblock %}
